@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM PRODUCT</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>FORM PRODUCT</h1>
+    <form id="form-product">
+        <input id="name" type="text" placeholder="productname">
+        <input id="price" type="number" placeholder="productprice">
+        <br>
+        <br>
+        <input type="radio" name="category" id="makanan" value="makanan"> makanan
+        <input type="radio" name="category" id="minuman" value="minuman"> makanan
+        <input type="radio" name="category" id="other" value="other"> makanan
+        <br>
+        <br>
+        <button onclick="OnButtonAdd(event)">ADD</button>
+    </form>
+    <br>
+    <h1> PRODUCT DATA </h1>
+    <table id="daftar-product">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Nama</th>
+                <th>Price</th>
+                <th>category</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+</body>
+<script>
+    let dataproduct = [
+        {
+            id: 1,
+            name: 'apel',
+            price: 5000,
+            category: 'food'
+        },
+        {
+            id: 2,
+            name: 'Milk',
+            price: 7000,
+            category: 'drink'
+        },
+        {
+            id: 3,
+            name: 'Tisu',
+            price: 2000,
+            category: 'other'
+        }
+    ]
+    class product {
+        constructor(id, name, price, category) {
+            this.id = id,
+                this.name = name,
+                this.price = price,
+                this.category = category
+        }
+    }
+
+    function ShowProduct(idx) {
+        let table = document.getElementById("daftar-product")
+        console.log(table)
+
+        //3.akses t body buat naro data dari datauser
+        let tbody = table.getElementsByTagName("tbody")[0]
+        console.log(tbody)
+
+        //3. biar bisa dapet objek/ d dalam array/data ddalamarray yaitu data-user pake LOOPING!
+        let tr = ""
+        for (let i = 0; i < dataproduct.length; i++) {
+            if (idx == i){
+                tr+=`
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input id="edit-nama" type="text" value="${dataproduct[i].name}">
+                        </td>
+                        <td>
+                            <input id="edit-price" type="number" value="${dataproduct[i].price}">
+                        </td>
+                        <td>
+                            <form>
+                                <input type="radio" name="category" id="makanan-baru" value
+                            </form>
+                        </td>
+                        <td>
+                            <button onclick="OnButtonSave(${i})">SAVE</button>
+                            <button onclick="OnButtonCANCEL()">CANEL</button>
+                        </td>
+                    </tr>
+                `
+            } else {
+                tr += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${dataproduct[i].name}</td>
+                                <td>${dataproduct[i].price}</td>
+                                <td>${dataproduct[i].category}</td>
+                                <td>
+                                    <button onclick= "OnButtonDel(${i})">DELETE</button>
+                                    <button onclick= "OnButtonEdit(${i})">EDIT</button>
+                                </td>
+                            </tr>
+                            `
+
+            }
+        }
+        tbody.innerHTML = tr
+    }
+
+    ShowProduct()
+
+    function OnButtonAdd(event) {
+        event.preventDefault()
+        console.log("add button d klik nich")
+
+        // get input value dengan akses formna
+        let form = document.getElementById("form-product")
+
+        let name = form["name"].value
+        let price = form["price"].value
+        let category = form["category"].value
+        console.log(name, price, category)
+
+        // check input
+        if (name === '' || price === '' || category === '') {
+            alert("Input Tidak Boleh Kosong!")
+            return
+        }
+
+        //masukan semua value yg baru d input ke table user
+        dataproduct.push(new product(
+            dataproduct.length + 1,
+            form["name"].value,
+            form["price"].value,
+            form["category"].value
+        ))
+
+        ShowProduct()
+
+        //reset value dari form
+        form["name"].value = ""
+        form["price"].value = ""
+        form["category"].value = ""
+
+    }
+
+    function OnButtonDel(index) {
+        console.log(`delete ke ${index} d klik nich`)
+
+        dataproduct.splice(index, 1)
+
+        ShowProduct()
+    }
+
+    function OnButtonEdit(index) {
+        console.log(`edit ke ${index} dklik nich`)
+         
+        ShowProduct(index)
+    }
+
+    function OnButtonSave (index){
+        console.log("buttonsave nih")
+
+        //get value
+        let editNama = document.getElementById("edit-nama").value
+        let editPrice = parseInt(document.getElementById("edit-price").value)
+        let editCategory = document.getElementById("edit-category").value
+        console.log(editNama)
+        console.log(editPrice)
+        console.log(category)
+        
+        dataproduct[index].name = editNama
+        dataproduct[index].price = editPrice
+        dataproduct[index].category = editCategory
+        console.log(dataproduct)
+
+        ShowProduct()
+
+    }
+
+    function OnButtonCANCEL(){
+        console.log("save nih")
+
+        ShowProduct()
+    }
+</script>
+
+</html>

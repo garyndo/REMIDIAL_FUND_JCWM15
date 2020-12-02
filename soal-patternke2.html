@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pattern</title>
+    
+</head>
+<body>
+    <h1>Masukan Kata</h1>
+    <input type="text" id="kata"></input>
+    <br>
+    <br>
+    <button type="button" onclick="hitungVokal();">HITUNG VOKAL</button>
+    <button type="button" onclick="hurufVokal();">HURUF VOKAL</button>
+    <button type="button" onclick="tanpaVokal();">TANPA VOKAL</button>
+    <h1> Result : </h1>
+    <h1 id="hasil"></h1>
+</body>
+    <script>
+        let input= document.getElementById('kata')
+        let output= document.getElementById('hasil')
+
+        function hitungVokal(){
+            let string = input.value
+            let stringArr = string.split('')
+
+            let Vokal = []
+            let VokalCount = 0
+
+            for(let i= 0; i < stringArr.length; i++){
+                if(stringArr[i] == 'a' || stringArr [i] == 'i' || stringArr [i] == 'u' || stringArr [i] == 'e' || stringArr [i] == 'o' ){
+                    Vokal.push(stringArr[i])
+                    VokalCount++
+                }
+            }
+        }
+        output.textContent = `${VokalCount}`
+
+        
+        function hurufVokal(){
+            let string = input.value
+            let kataArr = string.splot('')
+
+            let vocal = []
+
+            for(let i = 0 ; i < kataArr.length; i++){
+                if(kataArr[i] == 'a' || stringArr [i] == 'i' || stringArr [i] == 'u' || stringArr [i] == 'e' || stringArr [i] == 'o' ){
+                    vocal.push(kataArr[i])
+                }
+            }
+            output.textContent= `${vocal.join(',')}`
+        }
+
+
+    </script>
+</html>
